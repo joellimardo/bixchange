@@ -312,7 +312,7 @@ sub piefl {
 
     print qq|=======| . getcwd() . qq|==================\n|;
 
-     die 'Usage: perl newpiefl.pl PACKAGENAME' unless ($new_package_name) ;
+     die 'Usage: perl utils.pl --piefl=PACKAGENAME' unless ($new_package_name) ;
 
      chdir 'packages' or die 'Packages directory is missing -- bad install';
 
