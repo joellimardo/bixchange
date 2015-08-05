@@ -307,33 +307,79 @@ EOF
 }
 
 sub piefl {
-    my ($fname) = @_;
-    my @paths = qw|DOCS test data tmpl lib|;
-    my ($fnameStudder) = BixChange::_studder($fname);
-    foreach(@paths){
-        my $npath = BixChange::_OS_pathswitch(qq|$_/$fname|);
-	if(!-d $npath){
-	    mkdir $npath or die "Could not create new directory! $!";
-        }
-        
-    }
-    #create a dummy .dat
-    open(H,qq|>>$fname\.dat|) or die "Cannot create new .DAT file\n";
-    $fnameStudder=~s/\\/\//g;
-    print H qq{
-./DOCS/$fname/$fname-pom.xml
-./DOCS/$fname/Makefile.PL
-./test/$fname/00_1.t
-$fnameStudder
-./tmpl/$fname/$fname.tmpl
-./lib/$fname.end
-$fname\.dat
-    };
-    close(H);
-    
-  #copy and rename a bunc of documents OR use a bunch of templates
-  #and store them that way
 
+    my ($new_package_name) = @_;
+
+    print qq|=======| . getcwd() . qq|==================\n|;
+
+     die 'Usage: perl newpiefl.pl PACKAGENAME' unless ($new_package_name) ;
+
+     chdir 'packages' or die 'Packages directory is missing -- bad install';
+
+     dirmk($new_package_name,0755);
+     chdir $new_package_name or die $!;
+
+     dirmk('tmpl',0755);
+     dirmk('DOCS',0755);
+     dirmk(qq~DOCS/$new_package_name~, 0755);
+     dirmk('data',0755);
+     dirmk('data/' . substr($new_package_name, 0,1), 0755);
+     dirmk('data/' . substr($new_package_name, 0,1) . '/' . substr($new_package_name, 0,2),  0755);
+
+     dirmk('test',0755);
+
+     chdir '..' or die $!;
+     mktrainres($new_package_name);
+     mkpom($new_package_name);
+
+}
+
+###### Util functions #######
+
+########################################
+sub dirmk {
+########################################
+
+    my ($dir, $perms) = @_;
+    mkdir $dir or die $!;
+    chmod $perms, $dir or die $!;
+}
+########################################
+sub mktrainres {
+########################################
+    my ($package_name) = @_;
+    my $homefile = "$package_name/data/" . 
+                   substr($package_name,0,1) . '/' . 
+                   substr($package_name,0,2) . '/' .
+                   $package_name . 'train.ini';
+    open (my $fh, '>', $homefile ) or die qq|Error with $homefile: $!|;
+    print $fh <<EOF;
+[GENERAL]
+TRAIN=true
+EOF
+    close($fh) or die $!; 
+}
+
+########################################
+sub mkdummytmpl {
+########################################
+    my ($package_name) = @_;
+}
+
+########################################
+sub mkpom {
+########################################
+    my ($package_name) = @_;
+    my $pomfile = "$package_name/DOCS/$package_name/" . 
+                   $package_name . '-pom.xml';
+    open (my $fh, '>', $pomfile ) or die qq|Error with $pomfile: $!|;
+    print $fh <<EOF;
+<xml>
+
+</xml>
+EOF
+    close($fh) or die $!; 
+       
 }
 
 END:
