@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<assembly>
+  <id>your id here</id>
+  <builtFor>1.8</builtFor>
+  <version>0.2</version>
+  <dependencySet>
+    <modules>
+
+   </modules>
+  </dependencySet>
+  <database>
+
+  </database>
+  <tests>
+
+  </tests>
+  <links>
+    <link>
+      <id>home</id>
+      <hardlink>f=functionality;tmpl=azure/mainhelp;f1=main</hardlink>
+    </link>
+    <link>
+      <id>subelem</id>
+      <hardlink>f=functionality;tmpl=azure/mainhelpbody;filter10=on;filter9=on</hardlink>
+    </link>
+    <link>
+      <id>more</id>
+      <hardlink>f=functionality;tmpl=azure/mainhelpsubelem;filter9=on;filter12=on</hardlink>
+    </link>
+  </links>
+
+</assembly>

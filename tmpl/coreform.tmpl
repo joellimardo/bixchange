@@ -1,0 +1,14 @@
+<!-- Coreform.tmpl is for general use. $Id: coreform.tmpl,v 1.1 2007/07/20 12:15:49 joellimardo Exp $ -->
+
+        <tr><td> <TMPL_VAR NAME="DISPLAYNAME">
+        </td><td>
+        <TMPL_IF NAME="RAW">
+          <TMPL_VAR NAME="CODE">
+        <TMPL_ELSE>
+          <INPUT TYPE="<TMPL_VAR NAME="TYPE">" NAME="<TMPL_VAR NAME="NAME">"
+             SIZE = "<TMPL_VAR NAME="LENGTH"> MAXLENGTH="<TMPL_VAR NAME="LENGTH">"
+           
+             VALUE = "<TMPL_VAR NAME="VALUE">">
+             <!-- <TMPL_VAR NAME="NUMREP"> -->
+        </TMPL_IF>     
+       </td></tr>

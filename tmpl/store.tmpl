@@ -1,0 +1,64 @@
+<html>
+  <head><title><TMPL_VAR NAME="TITLE"></title></head>
+<body>
+<TMPL_VAR NAME="OTHERDATA">
+Your session has accessed this form <TMPL_LOOP NAME="SESSIONINFO"><TMPL_VAR NAME="SESSIONCOUNTER"></TMPL_LOOP> times.
+
+<TABLE summary="formholder" width="100%" border="1">
+<TMPL_LOOP NAME="PRODUCTS">
+
+ <tr><td>
+ <form name="Iwantproduct<TMPL_VAR NAME="NAME">" action="bixchange.cgi">
+
+
+ <TMPL_VAR NAME="NAME"></td><td> <INPUT TYPE="SUBMIT" WIDTH="15" value="Add item">
+</td><td>$<TMPL_VAR NAME="PRICE"></TD><TD>
+Quantity: <input name="quantsku<TMPL_VAR NAME="SKU">" type="text" width="4">
+<input type="HIDDEN" name="sku<TMPL_VAR NAME="SKU">" VALUE="<TMPL_VAR NAME="NAME">">
+<input type="HIDDEN" name="sessionid" value="<TMPL_VAR NAME="SESSIONID">">
+<input type="HIDDEN" name="f" value="store">
+<input type="HIDDEN" name="tmpl" value="store">
+<input type="HIDDEN" name="price" value="<TMPL_VAR NAME="PRICE">">
+<input type="HIDDEN" name="adding" value="sure">
+<input type="HIDDEN" name="gnumrep" value="<TMPL_VAR NAME="GROUP"><TMPL_VAR NAME="NUMREP">">
+</form>
+</td></tr>
+</TMPL_LOOP>
+</table>
+<h1>Items already added</h1>
+<TMPL_LOOP NAME="ACTIONS">
+  <TMPL_IF NAME="ACTION">
+    <TMPL_VAR NAME="ACTION">
+  </TMPL_IF>
+</TMPL_LOOP>
+
+<P>
+<a href="bixchange.cgi?f=store&tmpl=store&reading=yes&sessionid=<TMPL_VAR NAME="SESSION">">See Cart Contents</a>
+<b>Cart Contents</b><P>
+<TMPL_LOOP NAME="CARTCONTENTS">
+  <TMPL_VAR NAME="name">&nbsp;$<TMPL_VAR NAME="price">&nbsp;(<TMPL_VAR NAME="QUANTITY"> units)&nbsp;<TMPL_VAR NAME="SKU"> <a href="bixchange.cgi?f=store&tmpl=store&sessionid=<TMPL_VAR NAME="SESSIONID">&deleting=yes&sku=<TMPL_VAR NAME="SKU">">Delete</a><BR>
+
+   <!-- here is the total section -->
+    <TMPL_IF NAME="TOTAL">
+     <p>
+     TOTAL: $<TMPL_VAR NAME="TOTAL">
+    </TMPL_IF>
+   <!-- end of total section -->
+</TMPL_LOOP>
+
+<h2>Modify contents</h2>
+<form name="modify" method="GET" action="bixchange.cgi">
+<input type="HIDDEN" name="f" value="store">
+<input type="HIDDEN" name="tmpl" value="store">
+<input type="HIDDEN" name="modifying" value="yes">
+<input type="HIDDEN" name="sessionid" value="<TMPL_VAR NAME="SESSION">">
+SKU&nbsp;<input type="text" name="sku"><BR>
+NEWQUANTITY&nbsp;<input type="text" name="newquantity"><BR>
+<input type="submit" value="Change">
+</form>
+
+</body>
+</html>
+
+
+

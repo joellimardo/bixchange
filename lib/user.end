@@ -1,0 +1,280 @@
+package BixChange;
+# YOU MUST PLACE ALL FUNCTIONS AFTER THE __END__ tag.
+__END__
+
+
+__END__
+
+
+
+sub bixtest {
+ return 'this is a test of the autosplit functionality';
+}
+
+sub change_header_encoding 
+{
+   $BixChange::bix{BixChange::munge_runid('custom_report_header')} = qq|Content-Type:text/html; charset=| . $_[0] . qq|\n\n|;
+
+}
+
+sub persist_ref {
+   return(\$bix{'PERSIST'}->{$_[0]});
+
+}
+
+sub incr_persist {
+   if (!$_[1])
+   {
+   ${BixChange::persist_ref($_[0])}++;
+   }
+   else
+   {
+    ${BixChange::persist_ref($_[0])}+=$_[1];
+   }
+   return(BixChange::persist($_[0]));
+}
+
+
+sub _html_from_univ {
+    my ($univ, $target ) = @_;
+    my $bodyText = _get_universe_data($univ, $target);
+    my $aRef = HTML::Template->new_scalar_ref(\$bodyText, die_on_bad_params=>$bix{'html_die_on_bad_params'});
+    return $aRef;
+ }
+
+
+sub setlibs {
+   use lib qw|. ./lib ./lib/cpan|;
+}
+
+
+
+
+sub _get_universe_data {
+
+    my ($univ, $target) = @_;
+    my ($str);
+    if (defined($univ) && defined($target)) {
+        my $objXTar;
+        eval {
+	$objXTar = new XTAR(qq|packages/$univ.tar|);
+        $str = $objXTar->changeOperation($target);
+	 return($str)}
+    }
+
+
+    #if ($@ || ($str eq '')) { cgi_die( "Universe resource failed to load. " . $@ )};
+
+
+
+}
+
+sub _html_ret {
+   my ($retnum) = @_;
+   if (!defined($retnum)) {$retnum = 5}; 
+   return('<BR>' . '&nbsp;' x $retnum)
+}
+
+
+sub _a_href {
+  #cannot seem to find a way to write anchors with CGI.pm
+  my ($href, $linkname) = @_;
+  return qq(<a href = \"$href\" > $linkname </a>);
+}
+
+
+
+
+sub _poparchive {
+    my ($filename) = @_;
+    my $datastring = '';
+    $filename = _OS_pathswitch(qq(./data/_archives/$filename));
+    if (-f qq($filename\.lock)) {
+	open(HANDLE,qq(>$filename\.lock)) or die $!;
+        flock(HANDLE,LOCK_EX);
+	local($/);
+        if (-f qq($filename\.dat)) {
+         open(READHANDLE, qq($filename\.dat)) or die $!;
+         $datastring = <READHANDLE>;
+         close(READHANDLE);
+        }
+        unlink(qq($filename\.dat));
+        flock(HANDLE, LOCK_UN);
+        close(HANDLE);
+        return $datastring;
+    }
+
+}
+
+
+
+sub _publishtosubscribers {
+    my ($subscription, $message) = @_;
+    my $sfilename = './data/s/su/subscriptions.ini';
+    if (-f $sfilename) {
+	my $sini = Config::IniFiles->new(-file=>'./data/s/su/subscriptions.ini');
+        if (defined($sini->val($subscription,'SUBSCRIPTIONS'))) {
+            my @subscriptions = $sini->val($subscription,'SUBSCRIPTIONS');
+            foreach my $subs (@subscriptions) {
+                if ($subs=~m/(\S+\s*)+/) {$subs = $1;
+		    _filearchive($subs, $message)
+                   };
+            }
+        } else {
+	    die "NO SUCH SUBSCRIPTION";
+        }
+        
+    }
+    return "OK";
+
+}
+
+
+sub _switch_tmpl {
+
+  my ($newtempl) = @_;
+  #template resides in $bix{'PRIVATE' . $bix{'uniqRUN'}}->{PAGE}. Presuming all pages listed use the same
+  #SITEPACKAGE (should enforce this), one can safely switch the template upon running this
+  my $fullfile = _OS_pathswitch(qq(\./tmpl/$newtempl\.tmpl));
+  if (-f $fullfile ) {
+     $bix{'PRIVATE' . $bix{'uniqRUN'}}->{PAGE} = HTML::Template->new(filename=>$fullfile, die_on_bad_params=>$bix{'html_die_on_bad_params'}); 
+     foreach(@{$bix{'PRIVATE' . $bix{'uniqRUN'}}->{BANK}}) {
+       $bix{'PRIVATE' . $bix{'uniqRUN'}}->{PAGE}->param($_);
+     }
+  } else {
+   #remember to just die because we are in EVAL
+   die("Cannot switch template to $newtempl. It does not exist!");
+  }
+
+}
+
+
+sub _htendl {
+  #Think endl in C++, but with the BR type tag
+    my ($line)= @_;
+    ($line)=~s/\n/\n<BR>/g;
+    return $line;
+}
+
+
+sub _inherit {
+ #In a filter that updates data, inherit a field from a parent
+    my ($elemref, $keyval) = @_;
+    my $objref = $bix{'PRIVATE' . $bix{'uniqRUN'}}->{PARENT}->{CFG}->{v};
+    return( $objref->{'LOOP '.$elemref->{'GROUP'} . $elemref->{'PARENT'}}->{$keyval});
+}
+
+
+sub _xloader {
+    use lib qw|. ./lib /lib/cpan|;
+    my ($xobj, $pragmas, @params) = @_;
+
+    qx/echo Bx: Enter the _xloader >> $bix{BXTRACEFILE}/ if $bix{BXTRACE};
+
+    #okay to call die in here because we are ALWAYS in an EVAL block
+    die('No such XObject as ' . $xobj) unless (-f qq(./lib/$xobj\.pm));
+    
+    eval(qq(use $xobj qw\/$pragmas\/));
+    if ($@ ne '') {
+	die("Could not load $xobj because $@" . localtime());
+    }
+    my $nObj;
+    if (@params > 1) {
+     eval (qq(\$nObj = new $xobj\(\@params\))) or die qq|$@| . localtime();
+    } else {
+     eval (qq(\$nObj = new $xobj\(\'@params\'\))) or die qq|$@| . localtime();
+    }
+    if (defined($nObj)){
+	$nObj->{GENERAL} = $bix{'PRIVATE' . $bix{'uniqRUN'}}->{PARENT}->{CFG}->{v}->{GENERAL};
+     eval {$nObj->rock()};
+      if ($@ ne '') {
+        die("XLOADER Error: $@" . localtime()); 
+      } else {
+        push @{$bix{'PRIVATE' . $bix{'uniqRUN'}}->{BANK}} , $nObj->roll();
+        push @{$bix{'PRIVATE' . $bix{'uniqRUN'}}->{XLOADED}},@{$bix{'PRIVATE' . $bix{'uniqRUN'}}->{BANK}}[-1];
+      }
+    }
+     $nObj->disconnect();
+     undef $nObj;
+  
+     qx/echo Bx: Done _xloading >> $bix{BXTRACEFILE}/ if $bix{BXTRACE}; 
+
+}
+
+
+sub _validate_user {
+    my ($username, $pass, $userFileName) = @_;
+    $BixChange::bix{'USESESSIONS'. get_runid()}++;
+
+    if (!$bix{'PRIVATE' . $bix{'uniqRUN'}}->{USERCHECKS})
+       {
+	$bix{'PRIVATE' . $bix{'uniqRUN'}}->{USERCHECKS} = $userFileName||XINI->new(_OS_pathswitch('./data/u/us/users.ini'));
+        $bix{'PRIVATE' . $bix{'uniqRUN'}}->{USERCHECKS}->rock();
+        my $rolled = $bix{'PRIVATE' . $bix{'uniqRUN'}}->{USERCHECKS}->roll();
+	my @userrecord = grep {$_->{NAME} eq $username} @{$rolled->{USERS}};
+        if (@userrecord){
+	    if ($userrecord[0]->{PASSWORD} eq crypt($pass,$bix{'UNIVERSALSALT'}||'UNIVERSALSALT')) {
+		&initiate_session;
+                return $bix{'SESSION' . BixChange::get_runid()};
+            }
+        } else {
+            return undef;
+        }
+    }
+
+
+}
+
+
+
+sub a_dummy_function 
+ {
+
+    return ('keeps _xloader from being the last module in the bunch');
+
+ }
+
+
+sub breakmeout {
+ # This routine is a test to see if bixmanage can
+ # autosplit me
+ return 1;
+
+}
+
+sub email_munger {
+   my ($mail) = @_;
+   my $munged = '';
+   for(split//,$mail){ $munged .= $_; $munged .= '<SPAN />' x (rand(time)%10) };
+   return($munged);
+}
+
+sub cleanse {
+  my $inline = $_[0];
+  my %preparse = (
+    '<code>'=>'<P style="font-family:Courier;font-size:9pt;">',
+    '</code>'=>'</P>'
+    );
+  my %symbols = %{$BixChange::bix{'HTMLSAFESYMBOLS'}};
+  my %postparse = (
+   '&lt;P&gt;'=>'<P>'
+  );
+ foreach my $ins (keys %preparse){
+   $inline=~s/$ins/$preparse{$ins}/g;
+ }
+ my @input = split //,$inline;
+    my $rstr = '';
+    for(0..$#input) {
+     if($symbols{$input[$_]}){
+      $input[$_] = $symbols{$input[$_]};
+      }
+    }
+ $inline = join '',@input;
+ foreach my $ins (keys %postparse){
+   $inline=~s/$ins/$postparse{$ins}/g;
+ }
+   return $inline;
+}
+
+
+1;

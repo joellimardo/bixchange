@@ -1,0 +1,29 @@
+<html>
+  <body>
+
+
+  <FORM NAME="NewElemSubmission" action="bixchange.cgi" method="GET">
+   <table summary="Data Entry Form" width="800" border="1">
+     <TMPL_LOOP NAME="WEBFORM">
+        <TMPL_INCLUDE NAME="../coreform.tmpl">
+     </TMPL_LOOP>
+     
+  
+       </table>  
+       <!-- fields you don't want to appear in the table -->
+       <INPUT TYPE="HIDDEN" NAME="f" VALUE="main10">
+       <INPUT TYPE="HIDDEN" NAME="tmpl" VALUE="azure/main10">
+       <INPUT TYPE="HIDDEN" NAME="GROUP" VALUE="STUFFCREATED">
+       <INPUT TYPE="HIDDEN" NAME="NUMREP" VALUE="x">
+      
+    </FORM>
+    
+
+  <h1>Stuff already created</h1>
+  <TMPL_LOOP NAME="STUFFCREATED">
+    NewElem: <TMPL_VAR NAME="NEWELEM">&nbsp;&nbsp;
+    NewElemValue: <TMPL_VAR NAME="NEWELEMVALUE"><P>
+  </TMPL_LOOP>
+  </body>
+</html>
+        

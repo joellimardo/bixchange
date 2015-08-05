@@ -1,0 +1,38 @@
+<TMPL_INCLUDE NAME="header1.tmpl">
+ <TMPL_IF NAME="SHOWFORM">
+  <H1>Bottle Sets!</H1>
+  
+  <form name="WEBBY" ACTION="<TMPL_VAR NAME="ACTION">" method="GET">
+   <table width="100">
+  
+      <TMPL_LOOP NAME="WEBBY">
+        <tr><td> <TMPL_VAR NAME="DISPLAYNAME">
+        </td><td>
+        <TMPL_IF NAME="RAW">
+          <TMPL_VAR NAME="CODE">
+        <TMPL_ELSE>
+          <INPUT TYPE="<TMPL_VAR NAME="TYPE">" NAME="<TMPL_VAR NAME="NAME">"
+             LENGTH = "<TMPL_VAR NAME="LENGTH"> MAXLENGTH="<TMPL_VAR NAME="LENGTH">"
+           
+             VALUE = "<TMPL_VAR NAME="VALUE">">
+        </TMPL_IF>     
+       </td></tr>
+     </TMPL_LOOP>
+   
+   <tr><td>
+   <INPUT TYPE="SUBMIT" NAME="SUBMIT">
+   <INPUT TYPE ="HIDDEN" NAME="f" VALUE="form1">
+   <INPUT TYPE ="HIDDEN" NAME="tmpl" VALUE="form1">
+      </td></tr>
+   </table>
+   
+   <!-- EXPERIMENTAL -->
+   
+   
+   
+   </FORM>
+     </TMPL_IF>
+     <TMPL_VAR NAME="ACTION_NUEVO">
+  </BODY>
+</HTML>
+

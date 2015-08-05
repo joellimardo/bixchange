@@ -1,0 +1,26 @@
+BIXCHANGE VERSION FILE
+-----
+READ LICENSE.TXT AND INSTALL.TXT
+
+Version 1.8d (unreleased, Moved to github)
+
++ Changed bixchange.xml.cgi - now it just outputs the XML template. Put it in the templates directory of your package and use it in the customary fashion.
+
+
+Version 1.8c
+========================================================
++ Separates bixchange.cgi to BixChange.pm (in the ./lib directory) and used
+pertidy for cleanup of code.
+
+Version 1.8b
+========================================================
++ Recognized the potential for problems when using Apache::Registry. This version uses Time::HiRes to ensure that each users request information is unique.
+
+Version 1.8a
+=======================================================
++ Had problems testing on Linux...mostly filesystem differences. Fixed.
+
+Version 1.8
+=======================================================
++ Added POM capability and cleaned up the utils.pl --help. Use utils.pl --dbmlinks=<pomname> to compile the POM. It will be located in the /data directory.
+

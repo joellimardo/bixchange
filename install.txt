@@ -1,0 +1,77 @@
+BIXCHANGE INSTALLATION GUIDE
+============================
+
+Welcome and thank you for considering the BixChange Web Content Management System. This installation guide includes instructions for installing BixChange on both Windows and Linux Apache systems.
+
+BEFORE DOING ANYTHING
+---------------------
+
+Before installing any of this, return to SourceForge and check the package to see if there are any patch or servicepack releases for this version of BixChange. If there are, get those too and install them immediately after you complete this installation. Servicepacks typically only have replacement files in them, but if they include an installation script there will be a separate INSTALL.txt in them. 
+   Second, don't forget to subscribe to bixchange-notices@lists.sourceforge.net to be notified when patches, bug-releases, and new releases become available.
+
+UNPACKING BIXCHANGE
+-------------------
+
+BixChange typically comes in gunzip format. Winzip can unpack such a file on Windows, but on Linux you will have to do the following to extract the file:
+
+1. Place the bixchange.tar.gz file wherever you want the file extracted.
+2. Type the following at the command line:
+
+    gunzip --decompress bixchange.tar.gz
+    tar -xf bixchange.tar
+
+
+THINGS TO DO FIRST:
+------------------
+
+A. Disclaimer: Before proceeding you must read the license.txt file included with this distribution. It includes a disclaimer that states, basically, that we are not responsible for any damages caused by the installation. 
+
+B. Install HTML::Template
+
+   This kit does not ship with HTML::Template. You can get the latest version on Windows (with the ActiveState Perl build) by using PPM.  If you are on Linux you can use the CPAN shell or just go to http://www.cpan.org, find the source, and copy it down to your machine.
+
+C. Shebang Line: Lots of BixChange development happens on Windows machines and as such may have the shebang line setup incorrectly for your platform. Prior to installation open the bixchange.cgi file with your favorite editor and check the first line of the file (it will look like #!/c:... or #!/usr/local). Change this to the correct location of perl on your machine.
+
+D. Cwd: On at least one installation the standard getcwd() function of the Cwd library caused a fatal error in BixChange. In this case you may be able to change the getcwd() function with the cwd() function. Try running bixchange on the command line once it has been unpacked with: perl -T bixchange.cgi. If you see a bunch of HTML then you are fine. If not, open bixchange.cgi with an editor and change the BEGIN block to look like the following:
+ 
+use Cwd qw/getcwd cwd/;
+my $local_dir = cwd();
+...#leave the rest alone
+
+Save the file and try the command line instruction again. If that doesn't work, send us an e-mail at bixchange-development@lists.sourceforge.net (do not include anything like passwords or proprietary information in your e-mail).
+
+E: Cgi-Bin:  If you are using a shared server (the kind that you pay for monthly) you may have to abide by your server administrator's policies regarding the placement of cgi scripts. Typically this is in cgi-bin directory underneath a folder that has been designated for public html files. Check with your server administrator for more information.
+
+F. Chmod: If you are installing on Linux you should run through your installation and chmod everything with appropriate file permissions. Typically that means 755 on anything with either a .pl or .pm or .cgi extension. 
+
+GETTING STARTED
+---------------
+
+You know that BixChange is working when you can open a browser, point it at your installation, and call http://yourserver.com/cgi-bin/bixchange/bixchange.cgi. If you try this and get an error message you either a) missed a step from above or b) you have a problem we have not anticipated. In the latter case feel free to send us an e-mail. We will, of course, require the following information:
+
+ a) The operating system you are installing Bx on (Windows, Linux, Unix, MacOs, etc.)
+ b) Have you run perl -T bixchange.cgi from the command line? Send us the output if it is not the standard HTML that comes out.
+ c) What happens when you try to call bixchange.cgi from the browser?
+
+TAKING THE NEXT STEP
+--------------------
+
+BixChange was developed for developers and web designers alike. Although there are several quick-start guides (see http://www.bixchange.com for more details) there is a single, web-based document to act as a main reference for BixChange, the Development Guide. You can find this by clicking on the DevGuide link on the first main page of BixChange once it is loaded in a browser. If you are a web designer and not a developer you are mainly interested in the first six sections, particularly the Basics section. Feel free to peruse the other sections but you will have to have a fundamental grasp of the Perl programming language to do anything beyond the basics.
+   If you are a developer, however, read the entire thing. Then start working with the system and looking at the code. When you find things that suck, and you will, e-mail us with the following:
+
+  a) What is the code chunk that is problematic?
+  b) What is your fix? (No theoretical mush here, actual code please.)
+  c) Why is this fix much better than the current implementation?
+  d) Are you, or have you ever been, Larry Wall?
+
+
+What happens then? Unless it is a security fix new functionality does not get into the next release that easily. We will probably submit a branched version of Bx (our handy nickname for BixChange) to testers and bleeding-edge people next. If it still holds muster it will be put in a future release.
+
+MISC. INSTALL ADDENDUM
+-----------------------
+
+If you are on Ubuntu Linux and planning to use Postgres you might find the following handy:
+
+ apt-get install libdbd-pg-perl
+
+

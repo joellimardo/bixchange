@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <!-- $Id: tests.tmpl,v 1.1 2007/07/20 12:56:33 joellimardo Exp $ -->
+    <title>BixChange User Test Suite <TMPL_VAR NAME="VERSION">||<TMPL_VAR NAME="SLOGAN"></title>
+    <style type="text/css">
+     body {font-family:Courier;
+           }
+    </style>
+  </head>
+  <body>
+     <TMPL_VAR NAME="SHOW">
+     <hr />
+     <TMPL_VAR NAME="NORMALVALUE">
+     <BR />
+     <TMPL_VAR NAME="RANSACK">
+     <BR />
+     <TMPL_VAR NAME="PARTYMAN">
+<hr>
+   <TMPL_LOOP NAME="TEST">
+      <h3><SPAN style="color:red;">TARGET PLATFORM: </SPAN>: <TMPL_VAR NAME="TARGETPLATFORM"></h3>
+      <b>TEST ID:</B>&nbsp;<TMPL_VAR NAME="NUMREP"><BR />
+      <B>PURPOSE:</B>&nbsp;<TMPL_VAR NAME="PURPOSE"><BR />
+      <B>INPUT:</B>&nbsp;<TMPL_VAR NAME="INPUT"><BR />
+      <B>EXPLANATION:</B>&nbsp;<TMPL_VAR NAME="EXPLANATION"><BR />
+      <B>EXPECTED OUTPUT</B>:&nbsp; <TMPL_VAR NAME="EXPECTEDOUTPUT"><BR />
+      <B>RUN:</B>&nbsp;<TMPL_VAR NAME="CODE"><P />
+    <hr />
+   </TMPL_LOOP>
+
+  </BODY>
+</HTML>

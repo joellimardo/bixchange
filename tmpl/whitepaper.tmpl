@@ -1,0 +1,45 @@
+<HTML>
+  <head><title><tmpl_var name="TITLE"></TITLE>
+<style type="text/css">
+<!--
+TD {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 8pt; color: #000000}
+.news {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 8px; color: #333333}
+.newshead {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 18px; color: #FFFFFF; background-color: #003366; font-weight: bold}
+h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #FFFFFF; background-color: #003366; font-weight: bold}
+h3 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #000000; background-color: #FFFFFF; font-weight: bold}
+.hr {
+    border-width: thin;
+    border-color: #006699;
+    border-style: dotted;
+}
+-->
+</style>
+</HEAD>
+ <body>
+    <DIV class="news">
+    <table summary="outer" width="100%">
+    <tr><td width="10%">&nbsp;</td>
+    <td width="80%">
+      <table summary="inner"><tr><td>
+    <H1 class="newshead"><TMPL_VAR NAME="TITLE"></H1><BR>
+    <a href="http://www.forwardphase.com"><TMPL_VAR NAME="COMPANY"></a><BR>
+
+    <TMPL_VAR NAME="AUTHOR">, Chief Software Engineer<BR>
+    <TMPL_VAR NAME="ADDRESS">&nbsp;<TMPL_VAR NAME="SUITE"><BR>
+    <TMPL_VAR NAME="CITY">&nbsp; <TMPL_VAR NAME="STATE">&nbsp;<TMPL_VAR NAME="ZIP"><BR>
+
+<H2>GOAL</H2>
+    <TMPL_VAR NAME="GOAL"><BR>
+<H2>INTRODUCTION</H2>
+    <TMPL_VAR NAME="INTRODUCTION">
+<H2>PROJECT DESCRIPTION</H2>
+    <TMPL_VAR NAME="PROJECT_DESCRIPTION">
+<H2>CONCLUSION</H2>
+   <TMPL_VAR NAME="CONCLUSION">
+   </td><td width="10%"></tr></table><!-- end of inner>
+   </td></tr></table><!-- end of outer -->
+  </DIV>
+ </BODY>
+</HTML>
+
+

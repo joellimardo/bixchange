@@ -1,0 +1,3 @@
+
+Use of uninitialized value in substitution (s///) at bixchange.cgi line 605.
+Use of uninitialized value in substitution (s///) at /usr/local/apache/mod_brown/bixchange/bixchange.cgi line 605.
