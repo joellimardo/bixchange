@@ -26,9 +26,13 @@ THINGS TO DO FIRST:
 
 A. Disclaimer: Before proceeding you must read the license.txt file included with this distribution. It includes a disclaimer that states, basically, that we are not responsible for any damages caused by the installation. 
 
-B. Install HTML::Template
+B. Install HTML::Template and CGI
 
-   This kit does not ship with HTML::Template. You can get the latest version on Windows (with the ActiveState Perl build) by using PPM.  If you are on Linux you can use the CPAN shell or just go to http://www.cpan.org, find the source, and copy it down to your machine.
+   This kit does not ship with HTML::Template or CGI. 
+   You can get the latest version on Windows (with the ActiveState Perl build) by using PPM.  
+   For Strawberry Perl or something similar read documentation but it should probably
+   by cpan or cpanm. If you are on Linux you can use the CPAN shell or just go to http://www.cpan.org, 
+   find the source, and copy it down to your machine.
 
 C. Shebang Line: Lots of BixChange development happens on Windows machines and as such may have the shebang line setup incorrectly for your platform. Prior to installation open the bixchange.cgi file with your favorite editor and check the first line of the file (it will look like #!/c:... or #!/usr/local). Change this to the correct location of perl on your machine.
 
