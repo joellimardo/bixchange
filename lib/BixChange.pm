@@ -12,7 +12,9 @@ use CGI qw/:standard :debug /;
 use CGI::Cookie;
 use HTML::Template;
 use File::Find;
-use DB_File;
+# JL 2019/02/15 switched to GDBM_File
+#use DB_File;
+use GDBM_File;
 
 require Exporter;
 require BixConfig;

@@ -2,8 +2,17 @@ BIXCHANGE VERSION FILE
 -----
 READ LICENSE.TXT AND INSTALL.TXT
 
-Version 1.8d (unreleased, Moved to github)
 
+
+
+Version 1.8e
+========================================================
++ Changed to using GDBM module
++ Closed STDERR file handle at end of bixchange.cgi
+
+
+Version 1.8d (unreleased, Moved to github)
+========================================================
 + Changed bixchange.xml.cgi - now it just outputs the XML template. Put it in the templates directory of your package and use it in the customary fashion.
 
 

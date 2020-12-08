@@ -8,8 +8,6 @@ use BixConfig;
 use XTAR;
 use Fcntl qw|:flock :DEFAULT|;
 
-#$Id: bixchange.cgi,v 1.9 2014/02/04 21:35:52 joellimardo Exp $
-
 $|++;
 
 
@@ -31,7 +29,7 @@ chdir($BixChange::bix{'whereamireally'});
 
 open( STDERR, ">>" . BixChange::_OS_pathswitch('./log/error.log') );
 
-our $VERSION = '$id $';
+our $VERSION = '1.8e';
 
 if ( !$bix{'PERSIST'} ) {
     tie(
@@ -67,10 +65,10 @@ my $usingBxXML = BixChange::_untaint_param( 'BXXML', '\S+' );
 
 if ($pom) {
     my %D;
-    my ($pomFname) = qq|./data/$pom.dbm|;
+    my ($pomFname) = qq|./data/$pom.gdbm|;
     my $foundid = '';
 
-    tie( %D, 'DB_File', $pomFname, O_RDONLY, 0 );
+    tie( %D, 'GDBM_File', $pomFname, O_RDONLY, 0 );
    
     #if not found outright, grab the one closest to it
     if($D{$iid}=~m/\=/) {$foundid = $iid};
@@ -150,6 +148,7 @@ else
 }
 END:
     &BixChange::DESTROY;
+    close(STDERR);
 1;
 
 

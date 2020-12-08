@@ -1,13 +1,7 @@
 BIXCHANGE INSTALLATION GUIDE
 ============================
 
-Welcome and thank you for considering the BixChange Web Content Management System. This installation guide includes instructions for installing BixChange on both Windows and Linux Apache systems.
-
-BEFORE DOING ANYTHING
----------------------
-
-Before installing any of this, return to SourceForge and check the package to see if there are any patch or servicepack releases for this version of BixChange. If there are, get those too and install them immediately after you complete this installation. Servicepacks typically only have replacement files in them, but if they include an installation script there will be a separate INSTALL.txt in them. 
-   Second, don't forget to subscribe to bixchange-notices@lists.sourceforge.net to be notified when patches, bug-releases, and new releases become available.
+Welcome and thank you for considering the BixChange Web Utility. This installation guide includes instructions for installing BixChange on both Windows and Linux Apache systems.
 
 UNPACKING BIXCHANGE
 -------------------
@@ -28,13 +22,11 @@ A. Disclaimer: Before proceeding you must read the license.txt file included wit
 
 B. Install HTML::Template and CGI
 
-   This kit does not ship with HTML::Template or CGI. 
+   This kit ships with a legacy version of HTML::Template but not CGI. 
    You can get the latest version on Windows (with the ActiveState Perl build) by using PPM.  
-   For Strawberry Perl or something similar read documentation but it should probably
-   by cpan or cpanm. If you are on Linux you can use the CPAN shell or just go to http://www.cpan.org, 
-   find the source, and copy it down to your machine.
+   For Strawberry Perl or something similar read documentation but it should probably by cpan or cpanm. If you are on Linux you can use the CPAN shell or just go to http://www.cpan.org, find the source, and copy it down to your machine.
 
-C. Shebang Line: Lots of BixChange development happens on Windows machines and as such may have the shebang line setup incorrectly for your platform. Prior to installation open the bixchange.cgi file with your favorite editor and check the first line of the file (it will look like #!/c:... or #!/usr/local). Change this to the correct location of perl on your machine.
+C. Shebang Line: BixChange development used to happen on Windows machines and as such may have the shebang line setup incorrectly for your platform. Prior to installation open the bixchange.cgi file with your favorite editor and check the first line of the file (it will look like #!/c:... or #!/usr/local). Change this to the correct location of perl on your machine.
 
 D. Cwd: On at least one installation the standard getcwd() function of the Cwd library caused a fatal error in BixChange. In this case you may be able to change the getcwd() function with the cwd() function. Try running bixchange on the command line once it has been unpacked with: perl -T bixchange.cgi. If you see a bunch of HTML then you are fine. If not, open bixchange.cgi with an editor and change the BEGIN block to look like the following:
  
