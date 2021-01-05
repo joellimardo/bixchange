@@ -118,7 +118,7 @@ $BixChange::bix{'VERSION'} = $BixChange::bix{'VERSION_NUMBER'} . $BixChange::bix
                            'ini'=>'<<<studder>>>' );
 
 #DBMFORPERSIST is the DBM class to use for PERSIST
-$BixChange::bix{'DBMFORPERSIST'} = "DB_File";
+$BixChange::bix{'DBMFORPERSIST'} = "GDBM_File";
 
 #IMAGES, path to images
 

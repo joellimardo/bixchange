@@ -13,7 +13,7 @@ use_ok(Cwd);
 use_ok(Fcntl);
 use_ok(CGI::Cookie);
 use_ok(File::Find);
-use_ok(DB_File);
+use_ok(GDBM_File);
 use_ok(Data::Dumper);
 
 #verify all the necessary files are in the kit

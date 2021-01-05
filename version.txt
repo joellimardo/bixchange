@@ -2,8 +2,9 @@ BIXCHANGE VERSION FILE
 -----
 READ LICENSE.TXT AND INSTALL.TXT
 
-
-
+Version 1.8f
+========================================================
++ Config.pm had legacy reference to DB_File so system would not run
 
 Version 1.8e
 ========================================================

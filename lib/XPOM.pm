@@ -4,7 +4,7 @@ use lib qw/../;
 use vars qw/@ISA/;
 use XML::Simple;
 use Data::Dumper;
-use DB_File;
+use GDBM_File;
 use Fcntl;
 use XObjects; 
 
@@ -34,7 +34,7 @@ sub dbmlinks {
         my $xmlObj = XMLin($file);
         #print Dumper $xmlObj;
 
-        tie (%D,'DB_File','./data/' . $pomname . '.dbm', O_RDWR|O_CREAT,0666);
+        tie (%D,'GDBM_File','./data/' . $pomname . '.dbm', O_RDWR|O_CREAT,0666);
 	#%D = $xmlObj;
         if (ref($xmlObj->{links}->{link} eq 'HASH')) {
           #then there is only one
