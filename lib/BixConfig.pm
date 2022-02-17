@@ -113,6 +113,10 @@ $BixChange::bix{VERSION_PATCH} = q|f|;
 #VERSION, combination of VERSION_NUMBER and VERSION_PATCH. Use as needed.
 $BixChange::bix{'VERSION'} = $BixChange::bix{'VERSION_NUMBER'} . $BixChange::bix{'VERSION_PATCH'};
 
+#BUILDNUMBER, instead of MAJOR, MINOR, VERSION we have VERSION_NUMBERVERSION_PATCH which reads like N.Na-z
+$BixChange::bix{'BUILDNUMBER'} = '12';
+
+
 #FILEPATHMAP, a hash of extension=>paths
 %{$BixChange::bix{'FILEPATHMAP'}} = ( 'tmpl'=>'/tmpl',
                            'ini'=>'<<<studder>>>' );
