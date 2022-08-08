@@ -55,7 +55,7 @@ sub develop_body {
         }
         $bodyText .= qq|$indent<$tmpName>\n<TMPL_LOOP NAME=\"$tmpName\">\n$indent$indent<ROW>|;
         foreach ( keys %{ $cfg->{CFG}->{v}->{$keyname} } ) {
-            $bodyText .= qq|<$_> <TMPL_VAR NAME=\"$_\"> </$_>\n|;
+            $bodyText .= qq|<$_> <TMPL_VAR NAME=\"$_\" /> </$_>\n|;
         }
         $bodyText .= qq|$indent</ROW></TMPL_LOOP></$tmpName>|;
     }

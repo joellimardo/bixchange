@@ -108,13 +108,13 @@ $BixChange::bix{VERSION_NUMBER} = 1.8;
 
 #VERSION_PATCH, a letter designation indicating a patch (a,b,c...etc). So a
 #real version name for a given release could be 1.8b.
-$BixChange::bix{VERSION_PATCH} = q|f|;
+$BixChange::bix{VERSION_PATCH} = q|g|;
 
 #VERSION, combination of VERSION_NUMBER and VERSION_PATCH. Use as needed.
 $BixChange::bix{'VERSION'} = $BixChange::bix{'VERSION_NUMBER'} . $BixChange::bix{'VERSION_PATCH'};
 
 #BUILDNUMBER, instead of MAJOR, MINOR, VERSION we have VERSION_NUMBERVERSION_PATCH which reads like N.Na-z
-$BixChange::bix{'BUILDNUMBER'} = '12';
+$BixChange::bix{'BUILDNUMBER'} = '16';
 
 
 #FILEPATHMAP, a hash of extension=>paths

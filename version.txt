@@ -2,6 +2,13 @@ BIXCHANGE VERSION FILE
 -----
 READ LICENSE.TXT AND INSTALL.TXT
 
+Version 1.8g
+========================================================
++ XPOM has wrong extension for GDBM files in ./data (should be .gdbm)
++ Turned help into a genuine package, updated a few links, rewrote sections
++ Updated help files (functionality.ini) since it was outdated
++ loop_context_vars set to 1 in BixChange.pm for correct JSON output
+
 Version 1.8f
 ========================================================
 + Config.pm had legacy reference to DB_File so system would not run

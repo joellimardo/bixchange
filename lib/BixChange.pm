@@ -184,7 +184,9 @@ sub show_page {
         my $bodyText = $bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{TMPLACTUALBODY};
         $aRef =
           HTML::Template->new_scalar_ref( \$bodyText,
-            die_on_bad_params => $bix{'html_die_on_bad_params'} )
+					  die_on_bad_params => $bix{'html_die_on_bad_params'} ,
+                                          loop_context_vars => 1					  
+ )
           or cgi_die($!);
 
     }
@@ -193,7 +195,8 @@ sub show_page {
       || $aRef
       || HTML::Template->new(
         filename          => $bix{'page_template'},
-        die_on_bad_params => $bix{'html_die_on_bad_params'}
+	     die_on_bad_params => $bix{'html_die_on_bad_params'},
+	     loop_context_vars => 1
       );
 
     $page->param( $self->apply_filters($cfg) );
@@ -264,7 +267,8 @@ sub cgi_die {
     if ( !$bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{'UNIV'} ) {
         $deathpage =
           HTML::Template->new(
-            filename => _OS_pathswitch('./tmpl/first.tmpl') );
+            filename => _OS_pathswitch('./tmpl/first.tmpl') , 
+            loop_context_vars => 1 );
     }
     else {
         $deathpage =
@@ -303,7 +307,8 @@ sub push_page_output {
 
         #transformation mode
         if ( !$bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{'UNIV'} ) {
-            $newTemplate = HTML::Template->new( filename => $possTrans );
+            $newTemplate = HTML::Template->new( filename => $possTrans , 
+                                                loop_context_vars => 1 );
         }
         else {
             $newTemplate =

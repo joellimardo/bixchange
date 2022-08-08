@@ -8,9 +8,11 @@ use GDBM_File;
 use Fcntl;
 use XObjects; 
 
-# $Id: XPOM.pm,v 1.2 2009/04/14 20:32:51 joellimardo Exp $
+$XPOM::VERSION = '0.3';
 
-$XPOM::VERSION = '0.2';
+#$XML::Simple::PREFERRED_PARSER = 'XML::Parser';
+#$XML::Simple::PREFERRED_PARSER = 'XML::SAX::PurePerl';
+
 
 @ISA = qw/XObjects/;
 
@@ -34,7 +36,7 @@ sub dbmlinks {
         my $xmlObj = XMLin($file);
         #print Dumper $xmlObj;
 
-        tie (%D,'GDBM_File','./data/' . $pomname . '.dbm', O_RDWR|O_CREAT,0666);
+        tie (%D,'GDBM_File','./data/' . $pomname . '.gdbm', O_RDWR|O_CREAT,0666);
 	#%D = $xmlObj;
         if (ref($xmlObj->{links}->{link} eq 'HASH')) {
           #then there is only one

@@ -64,7 +64,7 @@ like ($output,
 $output = $BixChange::bix{'VERSION'};
 
 like($output,
-      qr|1.8f|,
+      qr|1.8g|,
        q|Proper version number set|);
 
 BixChange::persist('SMILES',100);
