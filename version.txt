@@ -2,6 +2,10 @@ BIXCHANGE VERSION FILE
 -----
 READ LICENSE.TXT AND INSTALL.TXT
 
+Version 1.8g - BUILD # 17
+========================================================
++ Added the ability to include additional resources dynamically
+
 Version 1.8g
 ========================================================
 + XPOM has wrong extension for GDBM files in ./data (should be .gdbm)

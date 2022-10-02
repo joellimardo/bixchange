@@ -137,6 +137,12 @@ if ( defined( $files[0] ) ) {
       map { BixChange::_untaint_param( $_, '\S+(\/\S+)*' ) } sort @files;
     $changer->show_page( @{ $bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{filevals} } );
 
+
+    #modified 2022/10/02 for pushmodactions
+    if ( $bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{additionalfilevals} ) {
+       
+       $changer->show_page( @{ $bix{ 'PRIVATE' . $bix{'uniqRUN'} }->{additionalfilevals} } );
+    }
     print $changer->get_output();
 
 }

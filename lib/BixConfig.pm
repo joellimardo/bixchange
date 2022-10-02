@@ -114,7 +114,7 @@ $BixChange::bix{VERSION_PATCH} = q|g|;
 $BixChange::bix{'VERSION'} = $BixChange::bix{'VERSION_NUMBER'} . $BixChange::bix{'VERSION_PATCH'};
 
 #BUILDNUMBER, instead of MAJOR, MINOR, VERSION we have VERSION_NUMBERVERSION_PATCH which reads like N.Na-z
-$BixChange::bix{'BUILDNUMBER'} = '16';
+$BixChange::bix{'BUILDNUMBER'} = '17';
 
 
 #FILEPATHMAP, a hash of extension=>paths
